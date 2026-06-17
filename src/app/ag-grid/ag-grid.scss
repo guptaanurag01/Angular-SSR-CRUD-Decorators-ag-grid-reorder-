@@ -1,0 +1,77 @@
+  :host {
+      display: block;
+      height:auto;
+      width: 100%;
+  }
+
+  ag-grid-angular {
+      height: 100%;
+      width: 100%;
+  }
+
+//   ::ng-deep .ag-paging-row-summary-panel {
+//       display: none !important;
+//   }
+
+  ::ng-deep .ag-paging-page-size {
+      display: none !important;
+  }
+
+  ::ng-deep .ag-theme-alpine .ag-paging-row-summary-panel {
+      display: none !important;
+  }
+
+
+  /* Target the header label container to push icons to the right */
+::ng-deep .ag-header-cell-label {
+    display: flex;
+    justify-content: space-between; /* Spreads text to left, icons to right */
+    width: 100%;
+}
+
+/* Ensure the text doesn't shrink and remains on the left */
+::ng-deep .ag-header-cell-text {
+    flex-grow: 1;
+}
+
+.custom-sort-icon {
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 12px;
+  cursor: pointer;
+}
+
+.custom-sort-icon::before,
+.custom-sort-icon::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+.custom-sort-icon::before {
+  top: 0;
+  border-bottom: 5px solid #9e9e9e; // up arrow
+}
+
+.custom-sort-icon::after {
+  bottom: 0;
+  border-top: 5px solid #9e9e9e; // down arrow
+}
+
+/* Highlight when sorted */
+.custom-sort-icon.active::before,
+.custom-sort-icon.active::after {
+  border-color: transparent;
+}
+
+.custom-sort-icon.active.asc::before {
+  border-bottom-color: #1976d2;
+}
+
+.custom-sort-icon.active.desc::after {
+  border-top-color: #1976d2;
+}

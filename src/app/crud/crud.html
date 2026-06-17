@@ -1,0 +1,96 @@
+<!-- <form #f="ngForm" (ngSubmit)="addOrUpdate(f)">
+    <h2>{{isEditMode ? "Edit" : "Add"}}</h2>
+
+    <input type="text" name="name" [(ngModel)]="userForm.name" #name="ngModel"> 
+    <input type="text" name="email" [(ngModel)]="userForm.email" #email="ngModel">
+
+    <button type="submit" >{{ isEditMode ? "Update" : "Submit"}}</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Sr.no</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+       @for(user of user(); track user) {<tr>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>
+                <button type="button"   (click)="editUser(user)" >Edit</button>
+                <button type="button" (click)="deleteUser(user.id)" >Delete</button>
+            </td>
+        </tr>}
+    </tbody>
+</table> -->
+
+<fieldset>
+  <legend>
+    <h1>
+      {{ isEditMode ? 'Update' : 'Add' }}
+    </h1>
+  </legend>
+
+  <form [formGroup]="userForm" (ngSubmit)="addOrUpdate()">
+    <div>
+      <label for="name">Enter UserName  </label>
+      <input type="text" placeholder="Enter name" formControlName="name" />
+      <small *ngIf="userForm.get('name')?.touched && userForm.get('name')?.invalid">
+        Name is required
+      </small>
+    </div>
+
+    <div>
+      <label for="email">Enter Email  </label>
+      <input type="email" placeholder="Enter email" formControlName="email" />
+      <small *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid">
+        Valid email is required
+      </small>
+    </div>
+
+    <div class="form-group form-check">
+      <input type="checkbox" formControlName="acceptTerms"     />
+      <label for="acceptTerms">I have read and agree to the Terms</label>
+      <small *ngIf="userForm.get('acceptTerms')?.touched && userForm.get('acceptTerms')?.invalid">
+        Accept Terms is required
+      </small>
+    </div>
+
+    <div>
+      <button type="submit">
+        {{ isEditMode ? 'Update' : 'Add' }}
+      </button>
+      <button type="button" (click)="onReset()" class="btn btn-warning float-right">Reset</button>
+    </div>
+  </form>
+
+  <hr />
+
+  <table border="1" width="50%">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of users()">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <button type="button" (click)="editUser(user)">Edit</button>
+          <button type="button" (click)="deleteUser(user.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>
+
+
+
+

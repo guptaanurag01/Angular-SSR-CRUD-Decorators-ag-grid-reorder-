@@ -1,0 +1,6 @@
+.home-cls {
+  display: flex;
+  justify-content: space-between; /* left & right */
+  align-items: flex-start;        /* align vertically */
+  gap: 20px;                      /* space between components */
+}

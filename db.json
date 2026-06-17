@@ -1,0 +1,18 @@
+{
+  "reports": [
+    {
+      "id": 1,
+      "defaultParams": {
+        "Department": "HR",
+        "Year": "2024"
+      }
+    },
+    {
+      "id": 2,
+      "defaultParams": {
+        "Department": "IT",
+        "Year": "2023"
+      }
+    }
+  ]
+}

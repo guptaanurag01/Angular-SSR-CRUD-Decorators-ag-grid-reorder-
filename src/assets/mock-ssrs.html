@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mock SSRS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 16px;
+    }
+    h2 {
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Employee Report (Mock)</h2>
+
+  <p><strong>Department:</strong> <span id="dept"></span></p>
+  <p><strong>Year:</strong> <span id="year"></span></p>
+
+  <script>
+    // Read query parameters from URL
+    const params = new URLSearchParams(window.location.search);
+
+    const department = params.get('Department') || 'N/A';
+    const year = params.get('Year') || 'N/A';
+
+    // Set values in UI
+    document.getElementById('dept').textContent = department;
+    document.getElementById('year').textContent = year;
+  </script>
+
+</body>
+</html>

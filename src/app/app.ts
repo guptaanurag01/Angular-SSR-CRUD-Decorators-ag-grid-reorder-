@@ -55,6 +55,9 @@ export class App {
 
   years = signal<string[]>([]);
   months = signal<string[]>([]);
+  calendarDays = signal<number[][]>([]);
+  selectedDay = signal<number>(0);
+  readonly dayHeaders = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
   private internalDate: any;
 
@@ -177,6 +180,7 @@ export class App {
       this.selectedYear.set(currentGregYear.toString());
       this.selectedMonth.set(moment(this.internalDate).month());
     }
+    this.generateCalendarGrid();
   }
 
   updateDisplayDate(): void {
@@ -201,6 +205,74 @@ export class App {
     this.updateDisplayDate();
   }
 
+  generateCalendarGrid(): void {
+    const weeks: number[][] = [];
+    let firstDayOfWeek: number;
+    let daysInMonth: number;
+    let currentDay: number;
+
+    if (this.selectedLocale() === 'ar-SA') {
+      const hijriFirst: any = (moment(this.internalDate) as any)
+        .iYear(parseInt(this.selectedYear(), 10))
+        .iMonth(this.selectedMonth())
+        .iDate(1);
+      firstDayOfWeek = hijriFirst.day();
+      daysInMonth = hijriFirst.iDaysInMonth();
+      const id: any = moment(this.internalDate);
+      currentDay =
+        id.iYear() === parseInt(this.selectedYear(), 10) &&
+        id.iMonth() === this.selectedMonth()
+          ? id.iDate()
+          : 0;
+    } else {
+      const gregFirst = moment(this.internalDate)
+        .year(parseInt(this.selectedYear(), 10))
+        .month(this.selectedMonth())
+        .date(1);
+      firstDayOfWeek = gregFirst.day();
+      daysInMonth = gregFirst.daysInMonth();
+      const id = moment(this.internalDate);
+      currentDay =
+        id.year() === parseInt(this.selectedYear(), 10) &&
+        id.month() === this.selectedMonth()
+          ? id.date()
+          : 0;
+    }
+
+    this.selectedDay.set(currentDay);
+
+    let week: number[] = new Array(firstDayOfWeek).fill(0);
+    for (let d = 1; d <= daysInMonth; d++) {
+      week.push(d);
+      if (week.length === 7) {
+        weeks.push([...week]);
+        week = [];
+      }
+    }
+    if (week.length > 0) {
+      while (week.length < 7) week.push(0);
+      weeks.push(week);
+    }
+    this.calendarDays.set(weeks);
+  }
+
+  onDayClick(day: number): void {
+    if (!day) return;
+    this.selectedDay.set(day);
+    if (this.selectedLocale() === 'ar-SA') {
+      this.internalDate = (moment(this.internalDate) as any)
+        .iYear(parseInt(this.selectedYear(), 10))
+        .iMonth(this.selectedMonth())
+        .iDate(day);
+    } else {
+      this.internalDate = moment(this.internalDate)
+        .year(parseInt(this.selectedYear(), 10))
+        .month(this.selectedMonth())
+        .date(day);
+    }
+    this.updateDisplayDate();
+  }
+
   onMonthChange(): void {
     if (this.selectedLocale() === "ar-SA") {
       this.internalDate = (moment(this.internalDate) as any)
@@ -214,6 +286,7 @@ export class App {
         .date(1);
     }
     this.updateDisplayDate();
+    this.generateCalendarGrid();
   }
 
   onYearChange(): void {
@@ -229,6 +302,7 @@ export class App {
         .date(1);
     }
     this.updateDisplayDate();
+    this.generateCalendarGrid();
   }
 
   onDateSelected(event: Event): void {

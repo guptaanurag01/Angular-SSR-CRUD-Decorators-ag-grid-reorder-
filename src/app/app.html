@@ -1,22 +1,22 @@
 <!-- <h1  style="color: rgb(102, 74, 74); background: #a68a8a4a" >{{ title().toUpperCase() }}</h1>
 <div class="home-cls"> -->
-  <!-- <app-child></app-child> -->
-  <!-- <app-parent></app-parent>
+<!-- <app-child></app-child> -->
+<!-- <app-parent></app-parent>
   <app-user></app-user>
   <app-reorder></app-reorder>
   <app-crud></app-crud> -->
 
-  <!-- <app-common-table></app-common-table> -->
+<!-- <app-common-table></app-common-table> -->
 <!-- </div> -->
 <!-- <app-ag-grid></app-ag-grid> -->
 <!-- <app-ssrs></app-ssrs> -->
-      
+
 <!-- <router-outlet></router-outlet> -->
 
 
 
 
-<!-- 
+
 
 
 <div class="calwrap" style="padding: 20px; font-family: sans-serif;">
@@ -32,7 +32,7 @@
       📅 Toggle Calendar Panel
     </button>
   </div>
-</div> -->
+</div>
 
 @if (isCalendarVisible()) {
 <div class="whole_calendar"
@@ -67,9 +67,31 @@
     </table>
   </div>
 
-  <div id="clsLocCalendar" style="margin-top: 15px; text-align: center; border-top: 1px solid #eee; padding-top: 10px;">
-    <!-- <label style="font-size: 13px; display:block; margin-bottom:5px; color:#555; font-weight: bold;"></label> -->
-    <input type="date" (change)="onDateSelected($event)" style="padding: 6px; width: 90%; cursor: pointer;" />
+  <div id="clsLocCalendar" style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+    <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 13px;">
+      <thead>
+        <tr>
+          @for (d of dayHeaders; track d) {
+          <th style="padding: 4px 2px; color: #888; font-weight: 600; font-size: 11px;">{{ d }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (week of calendarDays(); track $index) {
+        <tr>
+          @for (day of week; track $index) {
+          <td (click)="onDayClick(day)" [style.cursor]="day ? 'pointer' : 'default'"
+            [style.background]="day && day === selectedDay() ? '#007bff' : 'transparent'"
+            [style.color]="day && day === selectedDay() ? '#fff' : day ? '#333' : 'transparent'"
+            [style.borderRadius]="'4px'" [style.fontWeight]="day && day === selectedDay() ? 'bold' : 'normal'"
+            style="padding: 5px 2px; width: 14%;">
+            {{ day || '' }}
+          </td>
+          }
+        </tr>
+        }
+      </tbody>
+    </table>
   </div>
 </div>
 }

@@ -1,14 +1,75 @@
-<h1  style="color: rgb(102, 74, 74); background: #a68a8a4a" >{{ title().toUpperCase() }}</h1>
-<div class="home-cls">
+<!-- <h1  style="color: rgb(102, 74, 74); background: #a68a8a4a" >{{ title().toUpperCase() }}</h1>
+<div class="home-cls"> -->
   <!-- <app-child></app-child> -->
-  <app-parent></app-parent>
+  <!-- <app-parent></app-parent>
   <app-user></app-user>
   <app-reorder></app-reorder>
-  <app-crud></app-crud>
+  <app-crud></app-crud> -->
 
   <!-- <app-common-table></app-common-table> -->
-</div>
+<!-- </div> -->
 <!-- <app-ag-grid></app-ag-grid> -->
 <!-- <app-ssrs></app-ssrs> -->
       
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
+
+
+
+
+<!-- 
+
+
+<div class="calwrap" style="padding: 20px; font-family: sans-serif;">
+  <div class="datetaker">
+    <label style="font-weight: bold; display: block; margin-bottom: 5px;">Selected Output Date:</label>
+    <input type="text" [value]="selectedDateText()" readonly
+      style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 280px; font-size: 16px; background: #f9f9f9;" />
+  </div>
+
+  <div class="ico" style="margin-top: 10px;">
+    <button type="button" (click)="toggleCalendar()"
+      style="padding: 8px 14px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px;">
+      📅 Toggle Calendar Panel
+    </button>
+  </div>
+</div> -->
+
+@if (isCalendarVisible()) {
+<div class="whole_calendar"
+  style="margin-left: 20px; border: 1px solid #ddd; padding: 15px; width: 320px; background: #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); border-radius: 6px;">
+  <div id="Header_Div">
+    <table style="width: 100%; border-spacing: 5px;">
+      <tr>
+        <td>
+          <select [ngModel]="selectedLocale()" (ngModelChange)="selectedLocale.set($event); onLocaleChange()"
+            style="width: 100%; padding: 6px;">
+            <option value="ar-SA">Hijri</option>
+            <option value="en-US">Gregorian</option>
+          </select>
+        </td>
+        <td>
+          <select [ngModel]="selectedYear()" (ngModelChange)="selectedYear.set($event); onYearChange()"
+            style="width: 100%; padding: 6px;">
+            @for (year of years(); track year) {
+            <option [value]="year">{{ year }}</option>
+            }
+          </select>
+        </td>
+        <td>
+          <select [ngModel]="selectedMonth()" (ngModelChange)="selectedMonth.set($event); onMonthChange()"
+            style="width: 100%; padding: 6px;">
+            @for (month of months(); track $index) {
+            <option [value]="$index">{{ month }}</option>
+            }
+          </select>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="clsLocCalendar" style="margin-top: 15px; text-align: center; border-top: 1px solid #eee; padding-top: 10px;">
+    <!-- <label style="font-size: 13px; display:block; margin-bottom:5px; color:#555; font-weight: bold;"></label> -->
+    <input type="date" (change)="onDateSelected($event)" style="padding: 6px; width: 90%; cursor: pointer;" />
+  </div>
+</div>
+}
